@@ -6,22 +6,28 @@ import { Label } from "./core/Label.js";
 class Game extends Node {
     constructor() {
         super();
+        this._init();
+
+    }
+    _init() {
+        this.width = 900;
+        this.height = 500;
+        this.x=0;
+        this.y=0;
+        this.elm.style.backgroundImage = "url(./images/trucxanh_bg.jpg)";
+
         this.canClick = true;
         this.firstCard = null;
         this.secondCard = null;
         this.score = 100;
-        this.alpha = Math.floor(this.score / 10 );  
-        this._init();
-        
-    }
-    _init() {
+        this.alpha = Math.floor(this.score / 10);
         this._createBPlay()
-        this.removeChild(); 
+        this.removeChild();
         this._createCards();
         this._createScore();
     }
     _createCards() {
-        
+
         this.cards = [];
         for (let index = 0; index < 20; index++) {
             let card = new Card(index);
@@ -36,83 +42,86 @@ class Game extends Node {
             this.addChild(card);
         }
     }
-    _createBPlay(){
+    _createBPlay() {
         let BTPlay = new Label();
-        BTPlay.fontsize = 40 ;
+        BTPlay.fontsize = 40;
         BTPlay.width = 200
         BTPlay.height = 200
         BTPlay.elm.textContent = "BAT DAU "
-        BTPlay.x = 720 ;
-        BTPlay.y = 80 ;
+        BTPlay.x = 720;
+        BTPlay.y = 80;
         BTPlay.color = "Blue"
-        BTPlay.elm.addEventListener("click", this._init.bind(this,this.BTPlay));
+        BTPlay.elm.addEventListener("click", ()=>{
+            document.getElementsByTagName("div")[0].innerHTML = "";
+            this._init();
+        });
         console.log(BTPlay);
         this.BTPlay = BTPlay
         this.addChild(this.BTPlay);
-        
+
     }
     _createScore() {
         this.lblScore = new Label();
-        this.lblScore.text = 'score:' + this.score ;
-        this.lblScore.fontsize = 50 ;
+        this.lblScore.text = 'score:' + this.score;
+        this.lblScore.fontsize = 50;
         this.lblScore.x = 700;
-        this.lblScore.width = 50 ;
-        this.lblScore.height = 50 ;
+        this.lblScore.width = 50;
+        this.lblScore.height = 50;
         this.lblScore.y = 0;
         this.lblScore.color = "Black";
 
         this.addChild(this.lblScore);
-        
+
 
     }
 
     onClickCard(card) {
-         if(!this.canClick)  return;  
-         if(card === this.firstCard) return ;
-         if(this.firstCard === null){
-             this.firstCard = card ;
-             this.firstCard.open();
+        if (!this.canClick) return;
+        if (card === this.firstCard) return;
+        if (this.firstCard === null) {
+            this.firstCard = card;
+            this.firstCard.open();
 
-         } else {
-             this.canClick = false ;
-             this.secondCard = card;
-             this.secondCard.open();
+        } else {
+            this.canClick = false;
+            this.secondCard = card;
+            this.secondCard.open();
 
-             setTimeout(() => {
-                 this.compareCard();
-             } , 1000 );
-         }
+            setTimeout(() => {
+                this.compareCard();
+            }, 1000);
         }
+    }
 
     compareCard() {
-        if ( this.firstCard.value === this.secondCard.value ) {
+        if (this.firstCard.value === this.secondCard.value) {
             this.success();
         } else {
             this.failed();
         }
         this.lblScore.text = this.score;
     }
-    failed(){
-            console.log('failed');
-        this.canClick = true; 
-        this.score -=this.alpha
-            console.log(this.score);
+    failed() {
+        console.log('failed');
+        this.canClick = true;
+        this.score -= this.alpha
+        console.log(this.score);
         this.firstCard.close();
         this.secondCard.close();
         this.firstCard = null;
-        this.secondCard = null ;
-        
+        this.secondCard = null;
+
 
     }
-    success(){
-            console.log('success');
-        this.canClick = true ;
-        this.score += this.alpha ;
-            console.log(this.score);
+    success() {
+        console.log('success');
+        this.canClick = true;
+        this.score += this.alpha;
+        console.log(this.score);
         this.firstCard.hide();
         this.secondCard.hide();
-        this.firstCard = null ;
-        this.secondCard = null ;
+        this.firstCard = null;
+        this.secondCard = null;
     }
     resetGame() {
 
@@ -120,9 +129,6 @@ class Game extends Node {
 }
 
 let game = new Game();
-game.width = 900 ;
-game.height = 500;
-game.elm.style.backgroundImage = "url(./images/trucxanh_bg.jpg)";
 
 document.body.appendChild(game.elm);
 
