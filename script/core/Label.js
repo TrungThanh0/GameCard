@@ -37,4 +37,9 @@ export class Label extends Node {
         this.textColor = value;
         this.elm.style.color = value;
     }
+    _createElement(){
+        let elm = document.createElement("h1");
+        elm.style.position = "absolute";
+        return elm;
+    }
 }

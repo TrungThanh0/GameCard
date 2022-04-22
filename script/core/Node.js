@@ -50,9 +50,52 @@ export class Node { // entity
     removeChild(node) {
         let index = this.children.indexOf(node);
         if (index === -1) return;
-
         this.elm.removeChild(node.elm);
         this.children.splice(index, 1);
+    }
+    get scaleX() {
+        return this._scaleX;    
+    }
+    set scaleX(value) {
+        this._scaleX = value;
+        this.elm.style.transform = `scaleX(${this._scaleX})`
+        
+    }
+    get scaleY() {
+        return this._scaleY;    
+    }
+    set scaleY(value) {
+        this._scaleY = value;
+        this.elm.style.transform = `scaleY(${this._scaleY})`
+    }
+    get rotateY() {
+        return this._rotateY;    
+    }
+    set rotateY(value) {
+        this._rotateY = value;
+        this.elm.style.transform = `rotateY(${this._rotateY}deg)`
+    }
+    get rotate() {
+        return this._rotate;    
+    }
+    set rotate(value) {
+        this._rotateY = value;
+        this.elm.style.transform = `rotate(${this._rotate}deg)`
+    }
+    get scale() {
+        return this._scale;    
+    }
+    set scale(value) {
+        this._scale = value;
+        this.elm.style.transform = `scale(${this._scale})`
+    }
+    
+    get zIndex() {
+        return this._scaleY;    
+    }
+    set zIndex(value) {
+        this._zIndex = value;
+        this.elm.style.zIndex = this._zIndex
     }
 
 
